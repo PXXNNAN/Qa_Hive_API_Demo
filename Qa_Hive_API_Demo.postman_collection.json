@@ -1,13 +1,13 @@
 {
 	"info": {
 		"_postman_id": "a95dd488-be44-4816-94c4-8c9e9ca49dee",
-		"name": "Qa_Hive",
+		"name": "Qa_Hive_API_Demo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "31473816"
 	},
 	"item": [
 		{
-			"name": "Check_Api_Version",
+			"name": "Check_Api_Status",
 			"item": [
 				{
 					"name": "Base_Url",
@@ -129,7 +129,70 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"email\": \"string56\",\r\n  \"password\": \"string\"\r\n}",
+							"raw": "{\r\n  \"email\": \"string56\",\r\n  \"password\": \"string56\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_Url}}/auth/login",
+							"host": [
+								"{{base_Url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Password_Invalid_Condition",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"var errorMsg = \"Password must contain at least one uppercase letter, one number, and be at least 8 characters long\"\r",
+									"\r",
+									"pm.test(\"Check error message\", function (){\r",
+									"    pm.expect(jsonData.message).to.eql([errorMsg])   \r",
+									"})\r",
+									"\r",
+									"pm.test(\"Check Body Status Code\", function() {\r",
+									"    pm.expect(jsonData.statusCode).to.equal(400)\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{register_access_Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"string\",\r\n  \"password\": \"string\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -154,6 +217,51 @@
 		{
 			"name": "Register",
 			"item": [
+				{
+					"name": "/auth/register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"var jsonBody = pm.response.json()\r",
+									"\r",
+									"pm.collectionVariables.set(\"register_access_Token\",jsonBody.access_token)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{$randomUserName}}\",\r\n  \"password\": \"{{$randomPassword}}\",\r\n  \"name\": \"{{$randomFirstName}}\",\r\n  \"gender\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_Url}}/auth/register",
+							"host": [
+								"{{base_Url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "Email_Already_Use",
 					"event": [
@@ -190,51 +298,6 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n  \"email\": \"string\",\r\n  \"password\": \"string\",\r\n  \"name\": \"string\",\r\n  \"gender\": \"string\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_Url}}/auth/register",
-							"host": [
-								"{{base_Url}}"
-							],
-							"path": [
-								"auth",
-								"register"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/auth/register Copy",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 201\", function () {\r",
-									"    pm.response.to.have.status(201);\r",
-									"});\r",
-									"\r",
-									"var jsonBody = pm.response.json()\r",
-									"\r",
-									"pm.collectionVariables.set(\"register_access_Token\",jsonBody.access_token)"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"email\": \"String57\",\r\n  \"password\": \"String57\",\r\n  \"name\": \"string\",\r\n  \"gender\": \"string\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
