@@ -1,0 +1,334 @@
+{
+	"info": {
+		"_postman_id": "a95dd488-be44-4816-94c4-8c9e9ca49dee",
+		"name": "Qa_Hive",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31473816"
+	},
+	"item": [
+		{
+			"name": "Check_Api_Version",
+			"item": [
+				{
+					"name": "Base_Url",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_Url}}/",
+							"host": [
+								"{{base_Url}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "/auth/login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"    var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.collectionVariables.set(\"access_token\",jsonData.access_token)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"String57\",\r\n  \"password\": \"String57\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_Url}}/auth/login",
+							"host": [
+								"{{base_Url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unauthorized_Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"    var jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Check error message\", function (){\r",
+									"    pm.expect(jsonData.message).to.equal(\"Unauthorized\")   \r",
+									"})\r",
+									"\r",
+									"pm.test(\"Check Body Status Code\", function() {\r",
+									"    pm.expect(jsonData.statusCode).to.equal(401)\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{register_access_Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"string56\",\r\n  \"password\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_Url}}/auth/login",
+							"host": [
+								"{{base_Url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Register",
+			"item": [
+				{
+					"name": "Email_Already_Use",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"var jsonBody = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Check message\", function(){\r",
+									"    pm.expect(jsonBody.message).to.equal(\"Email already in use\")\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Check error test\",function(){\r",
+									"    pm.expect(jsonBody.error).to.equal(\"Bad Request\")\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Check statusCode\",function(){\r",
+									"    pm.expect(jsonBody.statusCode).to.equal(400)\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"string\",\r\n  \"password\": \"string\",\r\n  \"name\": \"string\",\r\n  \"gender\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_Url}}/auth/register",
+							"host": [
+								"{{base_Url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/auth/register Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"var jsonBody = pm.response.json()\r",
+									"\r",
+									"pm.collectionVariables.set(\"register_access_Token\",jsonBody.access_token)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"String57\",\r\n  \"password\": \"String57\",\r\n  \"name\": \"string\",\r\n  \"gender\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_Url}}/auth/register",
+							"host": [
+								"{{base_Url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get_Current_User",
+			"item": [
+				{
+					"name": "/auth/getCurrentUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_Url}}/auth/getCurrentUser",
+							"host": [
+								"{{base_Url}}"
+							],
+							"path": [
+								"auth",
+								"getCurrentUser"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_Url",
+			"value": "https://api-web-demo.qahive.com",
+			"type": "string"
+		},
+		{
+			"key": "null",
+			"value": ""
+		},
+		{
+			"key": "register_access_Token",
+			"value": ""
+		},
+		{
+			"key": "access_token",
+			"value": ""
+		}
+	]
+}
