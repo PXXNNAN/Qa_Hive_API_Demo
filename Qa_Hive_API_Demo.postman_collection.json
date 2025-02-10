@@ -182,7 +182,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"email\": \"{{$randomUserName}}\",\r\n  \"password\": \"{{$randomPassword}}\",\r\n  \"name\": \"{{$randomFirstName}}\",\r\n  \"gender\": \"string\"\r\n}",
+							"raw": "{\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"password\": \"{{$randomPassword}}\",\r\n  \"name\": \"{{$randomFirstName}}\",\r\n  \"gender\": \"string\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -323,6 +323,20 @@
 			"item": [
 				{
 					"name": "/users/profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -432,6 +446,30 @@
 			"item": [
 				{
 					"name": "/ecommerce/cc-payment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json()\r",
+									"\r",
+									"pm.test(\"Check response payment status\", function (){\r",
+									"    pm.expect(jsonData.status).to.equal(\"success\")\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Check response payment msg\", function(){\r",
+									"    pm.expect(jsonData.msg).to.equal(\"Payment success\")\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
