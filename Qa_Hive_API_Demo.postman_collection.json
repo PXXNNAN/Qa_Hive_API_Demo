@@ -69,67 +69,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"email\": \"String57\",\r\n  \"password\": \"String57\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_Url}}/auth/login",
-							"host": [
-								"{{base_Url}}"
-							],
-							"path": [
-								"auth",
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Unauthorized_Login",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Status code is 401\", function () {\r",
-									"    pm.response.to.have.status(401);\r",
-									"});\r",
-									"    var jsonData = pm.response.json();\r",
-									"\r",
-									"pm.test(\"Check error message\", function (){\r",
-									"    pm.expect(jsonData.message).to.equal(\"Unauthorized\")   \r",
-									"})\r",
-									"\r",
-									"pm.test(\"Check Body Status Code\", function() {\r",
-									"    pm.expect(jsonData.statusCode).to.equal(401)\r",
-									"})"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{register_access_Token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"email\": \"string56\",\r\n  \"password\": \"string56\"\r\n}",
+							"raw": "{\r\n  \"email\": \"String61@yopmail.com\",\r\n  \"password\": \"String61\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -297,7 +237,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"email\": \"string\",\r\n  \"password\": \"string\",\r\n  \"name\": \"string\",\r\n  \"gender\": \"string\"\r\n}",
+							"raw": "{\r\n    \"name\": \"String61\",\r\n    \"email\": \"String61@yopmail.com\",\r\n    \"password\": \"String61\",\r\n    \"gender\": \"Male\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -320,17 +260,152 @@
 			]
 		},
 		{
-			"name": "Get_Current_User",
+			"name": "Get_User_Profile",
 			"item": [
 				{
-					"name": "/auth/getCurrentUser",
+					"name": "/users/profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "{{access_Token}}",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_Url}}/users/profile",
+							"host": [
+								"{{base_Url}}"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Edit_User_Profile",
+			"item": [
+				{
+					"name": "/users/profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Dummy\",\r\n    \"gender\": \"Male\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_Url}}/users/profile",
+							"host": [
+								"{{base_Url}}"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get_Product_List",
+			"item": [
+				{
+					"name": "/ecommerce/product-list",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body matches the JSON schema\", function () {\r",
+									"  var schema = {\r",
+									"    type: \"array\",\r",
+									"    items: {\r",
+									"      type: \"object\",\r",
+									"      properties: {\r",
+									"        _id: { type: \"string\" },\r",
+									"        name: { type: \"string\" },\r",
+									"        detail: { type: \"string\" },\r",
+									"        price: { type: \"number\" },\r",
+									"        imageUrl: { type: \"string\" },\r",
+									"        id: { type: \"string\" }\r",
+									"      },\r",
+									"      required: [\"_id\", \"name\", \"detail\", \"price\", \"imageUrl\", \"id\"]\r",
+									"    }\r",
+									"  };\r",
+									"\r",
+									"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
 									"type": "string"
 								}
 							]
@@ -338,13 +413,55 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_Url}}/auth/getCurrentUser",
+							"raw": "{{base_Url}}/ecommerce/product-list",
 							"host": [
 								"{{base_Url}}"
 							],
 							"path": [
-								"auth",
-								"getCurrentUser"
+								"ecommerce",
+								"product-list"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CC_Payment",
+			"item": [
+				{
+					"name": "/ecommerce/cc-payment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cardholderName\": \"Demo valid card number\",\r\n    \"cardNumber\": \"4242424242424242\",\r\n    \"expiration\": \"1234567\",\r\n    \"cvv\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_Url}}/ecommerce/cc-payment",
+							"host": [
+								"{{base_Url}}"
+							],
+							"path": [
+								"ecommerce",
+								"cc-payment"
 							]
 						}
 					},
