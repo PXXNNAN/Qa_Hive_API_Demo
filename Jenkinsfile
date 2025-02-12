@@ -8,12 +8,12 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-                sh 'npm install -g newman'
+                bat 'npm install -g newman'
             }
         }
         stage('Run API Tests') {
             steps {
-                sh 'newman run Qa_Hive_API_Demo.postman_collection.json --reporters cli,junit --reporter-junit-export results.xml'
+                bat 'newman run Qa_Hive_API_Demo.postman_collection.json --reporters cli,junit --reporter-junit-export results.xml'
             }
         }
         stage('Publish Test Report') {
