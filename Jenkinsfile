@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/PXXNNAN/Qa_Hive_API_Demo.git'
+                git branch: 'main', url: 'https://github.com/PXXNNAN/Qa_Hive_API_Demo.git'
             }
         }
         stage('Install Dependencies') {
