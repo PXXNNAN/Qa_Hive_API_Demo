@@ -8,22 +8,17 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-                bat 'npm install -g newman newman-reporter-html'
+                bat 'npm install -g newman'
             }
         }
         stage('Run API Tests') {
             steps {
-                bat 'newman run Qa_Hive_API_Demo.postman_collection.json --reporters cli,junit,html --reporter-junit-export results/results.xml --reporter-html-export results/newman-report.html'
+                bat 'newman run Qa_Hive_API_Demo.postman_collection.json --reporters cli,junit --reporter-junit-export results.xml'
             }
         }
         stage('Publish Test Report') {
             steps {
-                junit 'results/results.xml'
-                publishHTML(target: [
-                    reportDir: 'results',
-                    reportFiles: 'newman-report.html',
-                    reportName: 'Newman Test Report'
-                ])
+                junit 'results.xml'
             }
         }
     }
