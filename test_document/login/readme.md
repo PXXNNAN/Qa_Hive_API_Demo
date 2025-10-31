@@ -1,0 +1,10 @@
+# 📄 Test Case Document: Login Feature
+## M01 : Login/Authentication
+
+| SC ID | SC Description | Test Case ID | Test Case | Precondition | Test Data | Test Steps | Expected Result | Positive/Negative | Test Result | Execute By | Execute Date | Remark |
+| :---: | :--- | :---: | :--- | :--- | :--- | :--- | :--- | :---: | :---: | :---: | :---: | :--- |
+| M01_SC01 | เข้าสู่ระบบ QA HIVE | M01_SC01_TC01 | Login เข้าสู่ระบบโดยใช้ Account ที่มีในระบบ | ใช้ Account ที่สมีครแล้ว | Username: `verified_user` <br> Password: `correct_pass` | 1. เข้าสู่หน้า Login <br> 2. กรอก Username และ Password ที่ถูกต้อง <br> 3. คลิกปุ่ม 'Login' | จะมีแจ้งเตือน Login Successful! Redirecting... ระบบเข้าสู่หน้า Dashboard ได้สำเร็จ | Positive | Pass | nan | 2025/10/31 | |
+| M01_SC01 | เข้าสู่ระบบ QA HIVE | M01_SC01_TC-02 | Login เข้าสู่ระบบโดยใช้ Account ที่ไม่มีในระบบ | | Username: `unverified_user` <br> Password: `correct_pass` | 1. เข้าสู่หน้า Login <br> 2. กรอก Username และ Password <br> 3. คลิกปุ่ม 'Login' | ระบบแสดงข้อความแจ้งเตือนว่า Unauthorized | Negative | Pass | nan | 2025/10/31 |
+| M01_SC01 | เข้าสู่ระบบ QA HIVE | M01_SC01_TC-03 | ตรวจสอบการ Login ด้วย Username ที่ผิด | | Username: `wrong_user` <br> Password: `correct_pass` | 1. เข้าสู่หน้า Login <br> 2. กรอก Username ผิด และ Password ถูก <br> 3. คลิกปุ่ม 'Login' | ระบบแสดงข้อความแจ้งเตือนว่า Unauthorized" | Negative | Pass | Nan | 2025/10/31 |
+| M01_SC01 | เข้าสู่ระบบ QA HIVE | M01_SC01_TC-04 | ตรวจสอบการ Login ด้วย Password ที่ผิด | | Username: `verified_user` <br> Password: `wrong_pass` | 1. เข้าสู่หน้า Login <br> 2. กรอก Username ถูก และ Password ผิด <br> 3. คลิกปุ่ม 'Login' | ระบบแสดงข้อความแจ้งเตือนว่า Unauthorized | Negative | Pass | Nan | 2025/10/31 |
+| M01_SC01 | เข้าสู่ระบบ QA HIVE | TC-05 | ตรวจสอบการแจ้งเตือนเมื่อไม่กรอก Username | | Username: `(ว่าง)` <br> Password: `correct_pass` | 1. เข้าสู่หน้า Login <br> 2. เว้นช่อง Username และกรอก Password ถูก <br> 3. คลิกปุ่ม 'Login' | ระบบแสดงข้อความแจ้งเตือน Please provide all values! | Negative | Pass | Nan | 2025/10/31 |
