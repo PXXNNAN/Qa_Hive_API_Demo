@@ -28,3 +28,8 @@ Login To Website By Use Empty Email And Password
     open_Browser    url=${ecommerce_url}    browser=${chrome}
     login_Website    email=${EMPTY}    password=${EMPTY}
     check_Error_Message    message=Please provide all values!
+
+Login To Website By Use Valid Account
+    open_Browser    url=${ecommerce_url}    browser=${chrome}
+    login_Website    email=${login_email}    password=${login_password}
+    check_Error_Message    message=Login Successful! Redirecting...
