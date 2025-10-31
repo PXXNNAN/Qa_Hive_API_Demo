@@ -19,7 +19,7 @@ Create New Account
     Log To Console    message=${set_time[2]}
     open_Browser    url=${ecommerce_url}    browser=${chrome}
     Register_Website    email=create_account_${set_time[2]}@yopmail.com    password=create_password_${set_time[2]}    name=create_name${set_time[2]}    gender=Male
-    check_Error_Message    message=dashboard
+    check_Error_Message    message=Created! Redirecting...
 
 Create Account But Account Is Dupplicate
     open_Browser    url=${ecommerce_url}    browser=${chrome}

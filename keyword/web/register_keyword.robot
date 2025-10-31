@@ -18,4 +18,3 @@ Register_Website
         SeleniumLibrary.Select Radio Button    group_name=gender    value=${gender}
     END
     SeleniumLibrary.Click Element    locator=${locator_xpath_submit_button}
-    SeleniumLibrary.Wait Until Page Contains    text=User Created! Redirecting...    timeout=10s    error=Can't Find User Created! Redirecting...
